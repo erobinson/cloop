@@ -28,6 +28,12 @@ sudo apt-get -y upgrade
 sudo apt-get -y autoremove
 sudo apt-get -y install vim bluetooth bluez-utils blueman wicd-curses bluetooth python-bluez python-gobject python-dbus screen
 
+sudo apt-get install lamp-server^
+
+cd /var/www
+sudo ln -s /home/erobinson/diabetes/cloop/device/webpage diabetes
+cd -
+
 sudo easy_install pudb
 
 if diff rc.local /etc/rc.local >/dev/null; then

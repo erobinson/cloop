@@ -64,6 +64,9 @@ class InjectionProcess():
     cloop_config = cloop_config.CloopConfig()
 
     def process_injection(self):
+        # if there is an injection in process or that failed don't take any action
+        if self.is_recent_outstanding_injection():
+            return
         automode = self.get_automode()
         # get injection aka do calculation
         inj = self.injection_calc()
@@ -343,6 +346,22 @@ class InjectionProcess():
         if len(rows) > 0:
             return True
         else:
+            return False
+
+    def is_recent_outstanding_injection():
+        """
+           If there there are any injections that are inprocess or failed then don't take any actions until they are complete.
+        """
+        sql_get_recent_failed_injections = " select * from injections where \
+                status != 'successful' and \
+                datetime_intended > now() - interval \
+                    (select count(*) from iob_dist where injection_type = 'square') \
+                    * 5 minute"
+
+        rows = self.cloop_db.select(sql_get_recent_failed_injections)
+        if len(rows) > 0:
+            return True
+        else
             return False
 
     def get_courses_covered(self, injection_id):
