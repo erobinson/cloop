@@ -105,6 +105,7 @@ class InjectionProcess():
                 inj.correction_units = 0
 
         inj.injection_units = inj.carbs_units + inj.correction_units
+        inj.injection_units = round(inj.injection_units, 1)
 
         if .5 > inj.injection_units > -.5:
             logging.info("Injections units too little to take action : " + str(inj.injection_units))
@@ -342,17 +343,18 @@ class InjectionProcess():
             sql_get_active_injections = "select * from injections where \
                         status = 'successful' and datetime_delivered > now() - interval 31 minute \
                                         and injection_type = 'square'"
+
         rows = self.cloop_db.select(sql_get_active_injections)
         if len(rows) > 0:
             return True
         else:
             return False
 
-    def is_recent_outstanding_injection():
+    def is_recent_outstanding_injection(self):
         """
            If there there are any injections that are inprocess or failed then don't take any actions until they are complete.
         """
-        sql_get_recent_failed_injections = " select * from injections where \
+        sql_get_recent_failed_injections = "select * from injections where \
                 status != 'successful' and \
                 datetime_intended > now() - interval \
                     (select count(*) from iob_dist where injection_type = 'square') \
@@ -361,7 +363,7 @@ class InjectionProcess():
         rows = self.cloop_db.select(sql_get_recent_failed_injections)
         if len(rows) > 0:
             return True
-        else
+        else:
             return False
 
     def get_courses_covered(self, injection_id):
@@ -382,7 +384,11 @@ class InjectionProcess():
         if windowsConfig:
             return True
         pump = pump_interface.PumpInterface()
-        result = pump.do_bolus(injection_units)
+        if self.get_automode() != 'fullOn':
+            logging.error("ERROR: Trying to do a bolus with automode not set to fullOn")
+            return False
+        else:
+            result = pump.do_bolus(injection_units)
         if result == "Successful":
             return True
         else:
