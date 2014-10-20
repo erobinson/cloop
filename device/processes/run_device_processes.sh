@@ -20,17 +20,17 @@ done
 
 echo "[$(date)] : run_device_processes.sh : Starting run" >> log/run_device_processes.log
 
-sudo timeout 600 python sync_device_pump.py
+sudo timeout 300 python sync_device_pump.py
 sleep 2
-#sudo timeout 600 python sync_device_phone.py
+#sudo timeout 300 python sync_device_phone.py
 #sleep 20
-sudo timeout 600 python confirm_injection_process.py
+sudo timeout 300 python confirm_injection_process.py
 sleep 2
-sudo timeout 600 python injection_process.py
+sudo timeout 300 python injection_process.py
 #sleep 30
-#sudo timeout 600 python sync_device_phone.py
+#sudo timeout 300 python sync_device_phone.py
 #sleep 2
-#sudo timeout 600 python shutdown_process.py
+#sudo timeout 300 python shutdown_process.py
 
 echo "[$(date)] : run_device_processes.sh : End of run" >> log/run_device_processes.log
 

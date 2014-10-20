@@ -1,0 +1,24 @@
+<br/>
+<center>
+<h1><font color='white'>Current BG: </font>
+<font color={{curBG.color}}><b>{{curBG.value}}</b> - {{curBG.time}}</font></h1>
+<br/>
+<h3><font color='white'>Last Action: {{lastAction}}</font></h3>
+<br/>
+<form action="dismiss.php" method="post">
+<input type="submit" value="Dismiss"/>
+</form>
+<br/>
+<h3><font color='white'>Current Mode: {{mode}}</font></h3>
+<br/>
+<form action="automode.php" method="post">
+<input type="hidden" name="mode" value="off"/>
+<input type="submit" value="OFF"/>
+</form><form action="automode.php" method="post">
+<input type="hidden" name="mode" value="lowsOnly"/>
+<input type="submit" value="Lows Only"/>
+</form><form action="automode.php" method="post">
+<input type="hidden" name="mode" value="fullOn"/>
+<input type="submit" value="Full On"/>
+</form>
+</center>
