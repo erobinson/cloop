@@ -23,15 +23,17 @@ $last_action_sql = "select title, message, datetime_to_alert, type from alerts
 	datetime_to_alert > now() - interval 12 hour";
 $result = mysqli_query($con, $last_action_sql);
 $last_action = mysqli_fetch_array($result);
-$last_action_html = "";
+$last_action_html = "{is_action: false}";
 if(mysqli_num_rows($result) > 0) {
+	$last_action_html = "{is_action: true, ";
 	$color = 'white';
 	if($last_action['type'] != 'info') {
 		$color = 'red';
 	}
-	$last_action_html = $last_action['datetime_to_alert'].
-		" - <b><font color=".$color.">".$last_action['title']."</font></b> "
-		.$last_action['message'];
+	$last_action_html .= "color: '$color', ";
+	$last_action_html .= "datetime_to_alert: '".$last_action['datetime_to_alert']."', ";
+	$last_action_html .= "title: '".$last_action['title']."', ";
+	$last_action_html .= "message: '".$last_action['message']."'}";
 }
 
 # get current bg
@@ -40,14 +42,17 @@ $result = mysqli_query($con, $cur_bg_sql);
 $cur_bg = mysqli_fetch_array($result);
 
 $color = 'green';
-if($cur_bg['sgv'] > 160) {
+date_default_timezone_set('America/New_York');
+if(strtotime($cur_bg['datetime_recorded']) < time() - 25 * 60 ) {
+	$color = 'grey';
+} elseif($cur_bg['sgv'] > 160) {
 	$color = 'orange';
 } elseif($cur_bg['sgv'] < 90) {
 	$color = 'red';
 }
 
 $values = "{curBG: {color: '".$color."', value: '".$cur_bg['sgv']."', time: '".$cur_bg['datetime_recorded']."'},
-	    lastAction: '".$last_action_html."', mode: '".$mode."'}";
+	    action: ".$last_action_html.", mode: '".$mode."'}";
 #$values = json_encode(array('item' => $post_data), JSON_FORCE_OBJECT);
 #echo $values;
 
@@ -65,6 +70,7 @@ $html .= "  loadTemplate('mainTemplate');";
 $html .= "  var ctx = ".$values.";";
 $html .= "  var html = HandleTmpls.mainTemplate(ctx);";
 $html .= "  document.getElementById('page_content').innerHTML = html;";
+$html .= "  setTimeout('location.reload()', 10000)";
 $html .= "</script></body></html>";
 
 echo $html;

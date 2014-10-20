@@ -3,11 +3,16 @@
 <h1><font color='white'>Current BG: </font>
 <font color={{curBG.color}}><b>{{curBG.value}}</b> - {{curBG.time}}</font></h1>
 <br/>
-<h3><font color='white'>Last Action: {{lastAction}}</font></h3>
+{{#if action.is_action}}
+<font color='white'><h3>Last Action: {{action.datetime_to_alert}} - <font color='{{action.color}}'>{{action.title}}</font></h3>
+{{action.message}}
+</font>
+<audio src="alarm.mp3" autoplay="true" loop="true"></audio>
 <br/>
 <form action="dismiss.php" method="post">
 <input type="submit" value="Dismiss"/>
 </form>
+{{/if}}
 <br/>
 <h3><font color='white'>Current Mode: {{mode}}</font></h3>
 <br/>
