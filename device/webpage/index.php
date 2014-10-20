@@ -31,7 +31,7 @@ if(mysqli_num_rows($result) > 0) {
 		$color = 'red';
 	}
 	$last_action_html .= "color: '$color', ";
-	$last_action_html .= "datetime_to_alert: '".$last_action['datetime_to_alert']."', ";
+	$last_action_html .= "datetime_to_alert: '".date('m/d g:i A', strtotime($last_action['datetime_to_alert']))."', ";
 	$last_action_html .= "title: '".$last_action['title']."', ";
 	$last_action_html .= "message: '".$last_action['message']."'}";
 }
@@ -51,8 +51,11 @@ if(strtotime($cur_bg['datetime_recorded']) < time() - 25 * 60 ) {
 	$color = 'red';
 }
 
-$values = "{curBG: {color: '".$color."', value: '".$cur_bg['sgv']."', time: '".$cur_bg['datetime_recorded']."'},
-	    action: ".$last_action_html.", mode: '".$mode."'}";
+$values = "{curBG: {color: '".$color."', 
+		    value: '".$cur_bg['sgv']."', 
+		    time: '".date('m/d g:i A', strtotime($cur_bg['datetime_recorded']))."'},
+		action: ".$last_action_html.", 
+		mode: '".$mode."'}";
 #$values = json_encode(array('item' => $post_data), JSON_FORCE_OBJECT);
 #echo $values;
 
