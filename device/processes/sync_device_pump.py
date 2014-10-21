@@ -94,7 +94,7 @@ class PumpDeviceDBTrans():
     ################### Internal methods below ############################
     # TODO: possibly switch from xml to json objects
     def import_sgvs(self, sgvs_xml):
-        logging.debug('importing sgvs xml : ' + sgvs_xml)
+        #logging.debug('importing sgvs xml : ' + sgvs_xml)
         if sgvs_xml.startswith("<sgvs>"):
             sgvs_xml = get_value_from_xml(sgvs_xml, "sgvs")
         if sgvs_xml == "":
@@ -105,7 +105,7 @@ class PumpDeviceDBTrans():
             self.import_sgv(sgv)
 
     def import_sgv(self, sgv_xml):
-        logging.debug('importing sgv : ' + sgv_xml)
+        #logging.debug('importing sgv : ' + sgv_xml)
         device_id = get_value_from_xml(sgv_xml, "device_id")
         datetime_recorded = get_value_from_xml(sgv_xml, "datetime_recorded")
         sgv = get_value_from_xml(sgv_xml, "sgv")
@@ -233,7 +233,7 @@ class DownloadPumpData():
             if record['name'] == 'GlucoseSensorData':
                 xml += self.sgv_to_xml(record['sgv'], record['date'])
         xml += "</sgvs>"
-        logging.info("sucessfully decoded cgm data file : " + xml)
+        #logging.info("sucessfully decoded cgm data file : " + xml)
         return xml
 
     def run_stick(self):
@@ -378,7 +378,7 @@ class DownloadPumpData():
 if __name__ == '__main__':
     # downlaod the data from the pump
     # parse it to get the latest sgv
-    logging.info("\n\nNew pump sync\n")
+    logging.info("\n\n\n\n\nNew pump sync\n")
     cloop_config = CloopConfig()
     db = cloop_db.CloopDB()
     db.log("SUCCESS", "sync_device_pump", "Going to sync device-pump at "+str(now))
@@ -388,7 +388,7 @@ if __name__ == '__main__':
     cgm_xml = download_pump.cgm_data_file_to_sgv_xml(file_output)
     if cgm_xml == 'ERRORFileDoesNotExist':
         db.log("FAIL", "sync_device_pump", "Failed to sync device-pump at "+str(now))
-        logging.error('Could not complete sync\n\n\n\n')
+        logging.error('\nCould not complete sync\n\n\n\n')
     else:
         #  last_sgv_xml = download_pump.get_latest_sgv()
         # import that sgv into the db

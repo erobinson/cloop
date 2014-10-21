@@ -424,8 +424,8 @@ class InjectionProcess():
 
 
 if __name__ == '__main__':
-    logging.info("Injection process started")
+    logging.info("\n\n\n\n\nInjection process started\n")
     process = InjectionProcess()
     process.process_injection()
-    logging.info("Injection process ended")
+    logging.info("\nInjection process ended\n\n\n\n")
 
