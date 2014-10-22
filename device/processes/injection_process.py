@@ -105,7 +105,6 @@ class InjectionProcess():
                 inj.correction_units = 0
 
         inj.injection_units = inj.carbs_units + inj.correction_units
-        inj.injection_units = round(inj.injection_units, 1)
 
         if .5 > inj.injection_units > -.5:
             logging.info("Injections units too little to take action : " + str(inj.injection_units))
@@ -115,12 +114,12 @@ class InjectionProcess():
                          + str(inj.cur_iob_units) + ") correction_units (" + str(inj.correction_units) + ")")
             return None
 
+        inj.injection_units = round(inj.injection_units, 2)
         if inj.injection_units > 0:
             # do a bolus
             if self.is_recent_injection("bolus"):
                 return None
             inj.injection_type = "bolus"
-            inj.injection_units = round(inj.injection_units, 2)
             inj.temp_rate = None
         else:
             # do a temp rate
@@ -424,8 +423,8 @@ class InjectionProcess():
 
 
 if __name__ == '__main__':
-    logging.info("\n\n\n\n\nInjection process started\n")
+    logging.info("Injection process started\n")
     process = InjectionProcess()
     process.process_injection()
-    logging.info("\nInjection process ended\n\n\n\n")
+    logging.info("\nInjection process ended\n\n\n\n\n\n")
 

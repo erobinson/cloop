@@ -378,7 +378,7 @@ class DownloadPumpData():
 if __name__ == '__main__':
     # downlaod the data from the pump
     # parse it to get the latest sgv
-    logging.info("\n\n\n\n\nNew pump sync\n")
+    logging.info("New pump sync\n")
     cloop_config = CloopConfig()
     db = cloop_db.CloopDB()
     db.log("SUCCESS", "sync_device_pump", "Going to sync device-pump at "+str(now))
@@ -396,7 +396,7 @@ if __name__ == '__main__':
         #  db_trans.import_sgv(latest_sgv_xml)
         db_trans.import_sgvs(cgm_xml)
         db.log("SUCCESS", "sync_device_pump", "Successfully synced device-pump sgvs at "+str(now))
-        logging.info("\nDONE WITH SYNC.\n\n\n\n")
+        logging.info("\nDONE WITH SYNC.\n\n\n\n\n\n")
 
 
 

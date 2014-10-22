@@ -186,7 +186,7 @@ class ConfirmInjectionProcess():
 
 
 if __name__ == '__main__':
-    logging.info("\n\n\n\n\nNEW Confirm Inj Process...\n"
+    logging.info("\NEW Confirm Inj Process...\n")
     confirm = ConfirmInjectionProcess()
     confirm.run(include_init=False)
-    logging.info("\nDone withConfirm Inj Process...\n\n\n\n")
+    logging.info("\nDone withConfirm Inj Process...\n\n\n\n\n\n")
