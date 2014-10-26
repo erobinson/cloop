@@ -12,6 +12,7 @@ if (mysqli_connect_errno()) {
 $dismiss_sql = "update alerts set datetime_dismissed = now(), src_dismissed = 'webpage' where datetime_dismissed is null";
 $result = mysqli_query($con, $dismiss_sql);
 
-echo "<html><body><h1>Dismissed all alerts</h1></body><script>setTimeout(\"window.location='/diabetes'\", 10000);</script></html>";
+echo "<html><body><h1>Dismissed all alerts. Redirecting in 10 seconds...</h1>";
+echo "<script>setTimeout(\"window.location='/diabetes'\", 10000);</script></body></html>";
 
 ?>
