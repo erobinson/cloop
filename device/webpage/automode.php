@@ -15,6 +15,6 @@ $is_on_sql .= "select max(automode_switch_id)+1 as automode_switch_id, '$is_on' 
 $is_on_sql .= "now() as datetime_recorded from automode_switch";
 mysqli_query($con, $is_on_sql);
 
-echo "<html><body><h1>Set automode to be ".$is_on."</h1></body></html>";
+echo "<html><body><h1>Set automode to be ".$is_on."</h1><script>setTimeout(\"window.location='/diabetes'\", 10000);</script></body></html>";
 
 ?>
